@@ -5,10 +5,10 @@
 				<h2>User info</h2>
         <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: "jpeg", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
         <table class="table" cellpadding="10">
-          <tr><td>name</td><td><%=  %></td></tr>
-          <tr><td>introduction</td><td><%=  %></td></tr>
+          <tr><td>name</td><td><%= @user.name %></td></tr>
+          <tr><td>introduction</td><td><%= @user.introduction %></td></tr>
         </table>
-        <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button>
+        <a href="/users/<%= @user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
 			</div>
 			<div class="new-book">
 				<h2>New book</h2>
@@ -48,7 +48,7 @@
         <tbody>
         <% @books.each do |book| %>
           <tr>
-            <td><%= attachment_image_tag book.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+            <td><a href="books/<%= book.id %>"><%= attachment_image_tag book.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></a></td>
             <td><%= book.title %></td>
             <td><%= book.body %></td>
           </tr>
