@@ -10,6 +10,31 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <h4 class="navbar-header pull-left nav-title">
+          Bookers
+        </h4>
+        <% if user_signed_in? %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/users/<%= current_user.id %>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>　Home</a></li>
+            <li><a href="/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>　Users</a></li>
+            <li><a href="/books"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>　Books</a></li>
+            <li><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span><%= link_to "logout", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        <% else %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>　Home</a></li>
+            <li><a href="/home/about"><span class="glyphicon glyphicon-link" aria-hidden="true"></span>　About</a></li>
+            <li><a href="/users/sign_up"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>　sign up</a></li>
+            <li><a href="/users/sign_in"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>　login</a></li>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
     <%= yield %>
+    <footer>
+      <p class="col-lg-2 col-lg-offset-9">CopyRight Infratop.inc</p>
+    </footer>
   </body>
 </html>

@@ -1,5 +1,4 @@
 <div class="container">
-  <%= render "devise/shared/notification" %>
 	<div class="row">
 		<div class="col-lg-3">
 			<div class="user-info">
@@ -9,7 +8,7 @@
           <tr><td>name</td><td><%= @user.name %></td></tr>
           <tr><td>introduction</td><td><%= @user.introduction %></td></tr>
         </table>
-        <a href="/users/<%= current_user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
+        <a href="/users/<%= @user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
 			</div>
 			<div class="new-book">
 				<h2>New book</h2>
@@ -37,21 +36,21 @@
 			</div>
 		</div>
 		<div class="col-lg-9">
-			<h2>Books</h2>
+			<h2>Users</h2>
       <table class="table table-hover">
         <thead>
           <tr>
+            <th>image</th>
+            <th>name</th>
             <th></th>
-            <th>Title</th>
-            <th>Opinion</th>
           </tr>
         </thead>
         <tbody>
-        <% @books.each do |book| %>
+        <% @users.each do |user| %>
           <tr>
-            <td><%= attachment_image_tag book.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
-            <td><%= link_to book.title, book_path(book) %></td>
-            <td><%= book.body %></td>
+            <td><%= attachment_image_tag user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+            <td><%= user.name %></td>
+            <td><%= link_to "show", user_path(user) %></td>
           </tr>
         <% end %>
       </table>

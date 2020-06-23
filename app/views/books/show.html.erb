@@ -8,7 +8,7 @@
           <tr><td>name</td><td><%= @user.name %></td></tr>
           <tr><td>introduction</td><td><%= @user.introduction %></td></tr>
         </table>
-        <a href="/users/<%= @user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
+        <a href="/users/<%= current_user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
       </div>
       <div class="new-book">
         <h2>New book</h2>
@@ -37,7 +37,7 @@
     </div>
     <div class="col-lg-9">
       <h2>Book detail</h2>
-      <table class="table table-hover">
+      <table class="table">
         <thead>
           <tr>
             <th></th>
@@ -52,8 +52,17 @@
             <td><%= attachment_image_tag @book.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
             <td><%= @book.title %></td>
             <td><%= @book.body %></td>
-            <td><%= link_to "Edit", edit_book_path(@book) , class:"btn btn-success" %></td>
-            <td><%= link_to "Destroy", book_path(@book), method: :delete, class:"btn btn-danger" %></td>
+            <% if @book.user.id == current_user.id %>
+              <td><%= link_to "Edit", edit_book_path(@book) , class:"btn btn-success" %></td>
+              <td><%= link_to "Destroy", book_path(@book), method: :delete, class:"btn btn-danger" %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td><%= link_to @book.user.name, user_path(@book.user_id) %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
       </table>
     </div>
