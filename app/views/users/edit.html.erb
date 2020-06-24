@@ -3,7 +3,8 @@
 		<h2>User info</h2>
 		<% if @user.errors.any? %>
 			<div id="errors_explanation">
-				<p class="text-danger"><%= @user.errors.count %>件のエラーが発生しました。</p>
+				<p class="text-danger"><%= pluralize(@user.errors.count, "error") %>
+				prohibited this book from being saved:</p>
 				<ul>
 				<% @user.errors.full_messages.each do |message| %>
 		            <li class="text-danger"><%= message %></li>

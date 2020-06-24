@@ -20,7 +20,7 @@
             <li><a href="/users/<%= current_user.id %>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>　Home</a></li>
             <li><a href="/users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>　Users</a></li>
             <li><a href="/books"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>　Books</a></li>
-            <li><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span><%= link_to "logout", destroy_user_session_path, method: :delete %></li>
+            <li><a href="/users/sign_out" data-method="delete"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>　logout</a></li>
           </ul>
         <% else %>
           <ul class="nav navbar-nav navbar-right">

@@ -3,7 +3,8 @@
 		<h2>Editing Book</h2>
 		<% if @book.errors.any? %>
 			<div id="errors_explanation">
-				<p class="text-danger"><%= @book.errors.count %>件のエラーが発生しました。</p>
+				<p class="text-danger"><%= pluralize(@book.errors.count, "error") %>
+					prohibited this book from being saved:</p>
 				<ul>
 				<% @book.errors.full_messages.each do |message| %>
 		            <li class="text-danger"><%= message %></li>
