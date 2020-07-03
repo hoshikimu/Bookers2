@@ -49,6 +49,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -60,6 +61,7 @@
               <td><%= link_to "Edit", edit_book_path(@book_detail) , class:"btn btn-success" %></td>
               <td><%= link_to "Destroy", book_path(@book_detail), method: :delete, class:"btn btn-danger" %></td>
             <% end %>
+              <td>コメント数：<%= @book_detail.post_comments.count %></td>
             <% if @book_detail.favorited_by?(current_user) %>
               <td>
                 <%= link_to book_favorites_path(@book_detail), method: :delete do %>
@@ -78,6 +80,7 @@
           </tr>
           <tr>
             <td><%= link_to @book_detail.user.name, user_path(@book_detail.user_id) %></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
