@@ -1,0 +1,30 @@
+<div class="col-xs-8 col-xs-offset-2">
+  <h2>Follower Users</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>image</th>
+        <th>name</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @users.exists? %>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= attachment_image_tag user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+            <td><%= user.name %></td>
+            <td>フォロー数：<%= user.follower.count %></td>
+            <td>フォロワー数：<%= user.followed.count %></td>
+            <td><%= link_to "Show", user_path(user) %></td>
+          </tr>
+        <% end %>
+      <% else%>
+          <td>ユーザーはいません</td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
