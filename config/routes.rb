@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'home/about' => 'homes#about'
   get 'follow/:user_id' => 'relationships#follow', as: 'follow'
   get 'follower/:user_id' => 'relationships#follower', as: 'follower'
+  get 'search' => 'search#search'
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :books do
