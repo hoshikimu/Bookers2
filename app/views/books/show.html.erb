@@ -89,33 +89,9 @@
           </tr>
         </tbody>
       </table>
-      <% @post_comments.each do |post_comment| %>
-        <div>
-          <%= attachment_image_tag post_comment.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
-          <%= post_comment.comment %>
-        </div>
-        <div>
-          <% if current_user.id == post_comment.user_id %>
-            <%= link_to "Destroy", book_post_comment_path(@book_detail, post_comment), method: :delete, class:"btn btn-danger btn-xs" %>
-          <% end %>
-        </div>
-        <p>
-          <%= link_to post_comment.user.name, user_path(post_comment.user_id) %>
-        </p>
-      <% end %>
-      <% if @post_comment.errors.any? %>
-        <div id="errors_explanation">
-           <p class="text-danger"><%= pluralize(@post_comment.errors.count, "error") %>
-            prohibited this book from being saved:</p>
-           <ul>
-            <% @post_comment.errors.full_messages.each do |message| %>
-              <li class="text-danger"><%= message %></li>
-            <% end %>
-           </ul>
-        </div>
-      <% end %>
+      <%= render partial: 'books/post_comment', locals: {post_comments: @post_comments, book_detail: @book_detail, post_comment_new: @post_comment_new}, class:"post_comment" %>
       <div>
-        <%= form_for [@book_detail, @post_comment] do |f| %>
+        <%= form_with model: [@book_detail, @post_comment_new] do |f| %>
         <div class="form-group">
           <%= f.text_area :comment, class:"form-control" %>
         </div>
