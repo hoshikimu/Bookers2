@@ -1,1 +1,1 @@
-$('.post_comment').html("<%= j(render partial: 'books/post_comment', locals: {post_comments: @post_comments, book_detail: @book_detail, post_comment_new: @post_comment_new}) %>");
+$('#post_comment_<%= @post_comment.id %>').html("<%= j(render partial: 'books/post_comment', locals: {book_detail: @book_detail, post_comment: @post_comment}) %>");

@@ -4,27 +4,27 @@
     <div class="col-xs-3">
       <div class="user-info">
         <h2>User info</h2>
-        <%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60, format: "jpeg", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
+        <%= attachment_image_tag @book.user, :profile_image, :fill, 60, 60, format: "jpeg", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
         <table class="table" cellpadding="10">
-          <tr><td>name</td><td><%= @book_detail.user.name %></td></tr>
-          <tr><td>introduction</td><td><%= @book_detail.user.introduction %></td></tr>
+          <tr><td>name</td><td><%= @book.user.name %></td></tr>
+          <tr><td>introduction</td><td><%= @book.user.introduction %></td></tr>
         </table>
         <a href="/users/<%= current_user.id %>/edit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a>
       </div>
       <div class="new-book">
         <h2>New book</h2>
-        <% if @book.errors.any? %>
+        <% if @book_new.errors.any? %>
           <div id="errors_explanation">
-            <p class="text-danger"><%= pluralize(@book.errors.count, "error") %>
+            <p class="text-danger"><%= pluralize(@book_new.errors.count, "error") %>
             prohibited this book from being saved:</p>
             <ul>
-              <% @book.errors.full_messages.each do |message| %>
+              <% @book_new.errors.full_messages.each do |message| %>
                 <li class="text-danger"><%= message %></li>
               <% end %>
             </ul>
           </div>
         <% end %>
-        <%= form_for(@book, url: books_path, method: :post) do |f| %>
+        <%= form_for(@book_new, url: books_path, method: :post) do |f| %>
           <div class="form-group">
             <label for="title">Title</label>
             <%= f.text_field :title, class:"form-control" %>
@@ -53,33 +53,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><%= attachment_image_tag @book_detail.user, :profile_image, format: "jpeg", width:"50", height:"50", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
-            <td><%= @book_detail.title %></td>
-            <td><%= @book_detail.body %></td>
-            <% if @book_detail.user.id == current_user.id %>
-              <td><%= link_to "Edit", edit_book_path(@book_detail) , class:"btn btn-success" %></td>
-              <td><%= link_to "Destroy", book_path(@book_detail), method: :delete, class:"btn btn-danger" %></td>
-            <% end %>
-              <td>コメント数：<%= @book_detail.post_comments.count %></td>
-            <% if @book_detail.favorited_by?(current_user) %>
-              <td>
-                <%= link_to book_favorites_path(@book_detail), method: :delete do %>
-                  <span class="glyphicon glyphicon-heart text-danger" aria-hidden="true"></span>
-                <% end %>
-                <%= @book_detail.favorites.count %>
-              </td>
-            <% else %>
-              <td>
-                <%= link_to book_favorites_path(@book_detail), method: :post do %>
-                  <span class="glyphicon glyphicon-heart text-muted" aria-hidden="true"></span>
-                <% end %>
-                <span><%= @book_detail.favorites.count %></span>
-              </td>
-            <% end %>
+          <tr id="book_<%= @book.id %>">
+            <%= render 'favorites/show_favorite', book: @book %>
           </tr>
           <tr>
-            <td><%= link_to @book_detail.user.name, user_path(@book_detail.user_id) %></td>
+            <td><%= link_to @book.user.name, user_path(@book.user_id) %></td>
             <td></td>
             <td></td>
             <td></td>
@@ -89,9 +67,24 @@
           </tr>
         </tbody>
       </table>
-      <%= render partial: 'books/post_comment', locals: {post_comments: @post_comments, book_detail: @book_detail, post_comment_new: @post_comment_new}, class:"post_comment" %>
+      <% @post_comments.each do |post_comment| %>
+        <div id="post_comment_<%= post_comment.id %>">
+          <%= render partial: 'books/post_comment', locals: {book: @book, post_comment: post_comment} %>
+        </div>
+      <% end %>
+      <% if @post_comment.errors.any? %>
+        <div id="errors_explanation">
+           <p class="text-danger"><%= pluralize(@post_comment.errors.count, "error") %>
+            prohibited this book from being saved:</p>
+           <ul>
+            <% @post_comment.errors.full_messages.each do |message| %>
+              <li class="text-danger"><%= message %></li>
+            <% end %>
+           </ul>
+        </div>
+      <% end %>
       <div>
-        <%= form_with model: [@book_detail, @post_comment_new] do |f| %>
+        <%= form_with model: [@book, @post_comment], data: {"turbolinks" => false} do |f| %>
         <div class="form-group">
           <%= f.text_area :comment, class:"form-control" %>
         </div>
